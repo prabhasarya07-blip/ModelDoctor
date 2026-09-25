@@ -1,0 +1,333 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --void: #0a0a14;
+  --surface: #12121f;
+  --border: #1e1e35;
+  --accent-blue: #4285f4;
+  --accent-teal: #00deb4;
+  --accent-red: #ff2244;
+  --accent-orange: #ff5500;
+  --accent-yellow: #ffb800;
+  --accent-purple: #a855f7;
+  --text-primary: #e8e8ff;
+  --text-muted: #6b6b8a;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: var(--font-inter), system-ui, -apple-system, sans-serif;
+  background-color: var(--void);
+  color: var(--text-primary);
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--void);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--border);
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--text-muted);
+}
+
+/* Glassmorphism */
+.glass {
+  background: rgba(255, 255, 255, 0.03);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.glass-strong {
+  background: rgba(18, 18, 31, 0.8);
+  backdrop-filter: blur(32px);
+  -webkit-backdrop-filter: blur(32px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+/* Gradients */
+.gradient-text {
+  background: linear-gradient(135deg, #4285f4, #00deb4 50%, #a855f7);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.gradient-text-red {
+  background: linear-gradient(135deg, #ff2244, #ff5500);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.gradient-border {
+  position: relative;
+}
+
+.gradient-border::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  padding: 1px;
+  border-radius: inherit;
+  background: linear-gradient(135deg, rgba(66, 133, 244, 0.4), rgba(0, 222, 180, 0.2), rgba(168, 85, 247, 0.3));
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+}
+
+/* Glow effects */
+.glow-blue {
+  box-shadow: 0 0 20px rgba(66, 133, 244, 0.15), 0 0 60px rgba(66, 133, 244, 0.05);
+}
+
+.glow-teal {
+  box-shadow: 0 0 20px rgba(0, 222, 180, 0.15), 0 0 60px rgba(0, 222, 180, 0.05);
+}
+
+.glow-red {
+  box-shadow: 0 0 20px rgba(255, 34, 68, 0.15), 0 0 60px rgba(255, 34, 68, 0.05);
+}
+
+/* Shimmer animation */
+@keyframes shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+.shimmer {
+  background: linear-gradient(90deg, rgba(255, 255, 255, 0), rgba(255, 255, 255, 0.03) 50%, rgba(255, 255, 255, 0));
+  background-size: 200% 100%;
+  animation: shimmer 3s ease-in-out infinite;
+}
+
+/* Animated border */
+@keyframes border-rotate {
+  0% {
+    --angle: 0deg;
+  }
+  100% {
+    --angle: 360deg;
+  }
+}
+
+@property --angle {
+  syntax: '<angle>';
+  initial-value: 0deg;
+  inherits: false;
+}
+
+.animated-border {
+  position: relative;
+  overflow: hidden;
+}
+
+.animated-border::before {
+  content: '';
+  position: absolute;
+  inset: -2px;
+  background: conic-gradient(from var(--angle), #4285f4, #00deb4, #a855f7, #4285f4);
+  animation: border-rotate 4s linear infinite;
+  border-radius: inherit;
+  z-index: -1;
+}
+
+.animated-border::after {
+  content: '';
+  position: absolute;
+  inset: 1px;
+  background: var(--void);
+  border-radius: inherit;
+  z-index: -1;
+}
+
+/* Health score ring */
+@keyframes ring-draw {
+  0% {
+    stroke-dashoffset: var(--circumference);
+  }
+  100% {
+    stroke-dashoffset: var(--final-offset);
+  }
+}
+
+.health-ring-animated {
+  animation: ring-draw 1.5s ease-out forwards;
+}
+
+/* Scanner line */
+@keyframes scan-sweep {
+  0% {
+    top: 0;
+    opacity: 0;
+  }
+  10% {
+    opacity: 1;
+  }
+  90% {
+    opacity: 1;
+  }
+  100% {
+    top: 100%;
+    opacity: 0;
+  }
+}
+
+.scan-line {
+  animation: scan-sweep 2s ease-in-out infinite;
+}
+
+/* Background drift keyframes */
+@keyframes drift-1 {
+  0%, 100% {
+    transform: translate(0) scale(1);
+  }
+  33% {
+    transform: translate(5%, 3%) scale(1.05);
+  }
+  66% {
+    transform: translate(-3%, -2%) scale(0.95);
+  }
+}
+
+@keyframes drift-2 {
+  0%, 100% {
+    transform: translate(0) scale(1);
+  }
+  33% {
+    transform: translate(-4%, 2%) scale(1.03);
+  }
+  66% {
+    transform: translate(3%, -4%) scale(0.97);
+  }
+}
+
+@keyframes drift-3 {
+  0%, 100% {
+    transform: translate(0) scale(1);
+  }
+  50% {
+    transform: translate(2%, -3%) scale(1.04);
+  }
+}
+
+@keyframes pulse-dot {
+  0%, 100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.4;
+    transform: scale(0.8);
+  }
+}
+
+/* Code Editor container */
+.editor-container {
+  border-radius: 12px;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+/* Issue severity borders & backgrounds */
+.severity-critical {
+  color: var(--accent-red);
+  border-color: var(--accent-red);
+}
+.severity-high {
+  color: var(--accent-orange);
+  border-color: var(--accent-orange);
+}
+.severity-medium {
+  color: var(--accent-yellow);
+  border-color: var(--accent-yellow);
+}
+.severity-low {
+  color: var(--text-muted);
+  border-color: var(--text-muted);
+}
+
+.severity-bg-critical {
+  background-color: rgba(255, 34, 68, 0.12);
+}
+.severity-bg-high {
+  background-color: rgba(255, 85, 0, 0.12);
+}
+.severity-bg-medium {
+  background-color: rgba(255, 184, 0, 0.12);
+}
+.severity-bg-low {
+  background-color: rgba(107, 107, 138, 0.12);
+}
+
+.issue-stripe-critical {
+  border-left: 3px solid var(--accent-red);
+}
+.issue-stripe-high {
+  border-left: 3px solid var(--accent-orange);
+}
+.issue-stripe-medium {
+  border-left: 3px solid var(--accent-yellow);
+}
+.issue-stripe-low {
+  border-left: 3px solid var(--text-muted);
+}
+
+/* Monaco editor live scan decorations */
+.live-marker-critical {
+  background-color: rgba(255, 34, 68, 0.1) !important;
+}
+.live-marker-high {
+  background-color: rgba(255, 85, 0, 0.1) !important;
+}
+.live-marker-medium {
+  background-color: rgba(255, 184, 0, 0.06) !important;
+}
+.live-marker-low {
+  background-color: rgba(107, 107, 138, 0.06) !important;
+}
+
+.glyph-marker-error {
+  background: var(--accent-red);
+  border-radius: 50%;
+  width: 8px !important;
+  height: 8px !important;
+  margin-top: 6px;
+  margin-left: 4px;
+}
+
+.glyph-marker-warn {
+  background: var(--accent-yellow);
+  border-radius: 50%;
+  width: 8px !important;
+  height: 8px !important;
+  margin-top: 6px;
+  margin-left: 4px;
+}
