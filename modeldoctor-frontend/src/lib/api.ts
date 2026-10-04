@@ -1,11 +1,17 @@
 /* ────────────────────────────────────────
-   API client for the FastAPI backend
+   API client.
+
+   In production (Vercel) the FastAPI backend was ported to Next.js
+   Route Handlers, so requests are same-origin at /api/*.
+
+   Locally, set NEXT_PUBLIC_API_URL=http://localhost:8000 to keep
+   talking to the Python backend instead.
    ──────────────────────────────────────── */
 
 import { DiagnoseRequest, DiagnosisResponse, QuickScanResponse } from "./types";
 
 
-const API_BASE = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000";
+const API_BASE = process.env.NEXT_PUBLIC_API_URL || "";
 
 /**
  * Code-only diagnosis (JSON body — backward compatible).
@@ -63,7 +69,7 @@ async function _fetchDiagnosis(
     }
     if (err instanceof TypeError) {
       throw new Error(
-        "Cannot reach the ModelDoctor backend. Make sure the server is running on port 8000."
+        "Cannot reach the ModelDoctor API. Check your connection and try again."
       );
     }
     throw new Error("Network error — please check your connection and try again.");
